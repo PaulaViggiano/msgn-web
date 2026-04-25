@@ -19,7 +19,7 @@ const PROJECTS = [
     category: 'Tecnología · Inteligencia Artificial',
     title: 'IA Week Neuquén 2026',
     desc: 'Primer gran evento de IA de la Patagonia. Polo Tecnológico. Speakers como Santi Siri y Freddy Vivas. Productor general y comercializador del evento.',
-    image: '/images/ia-week.jpg',
+    image: '/images/ia-week.jpeg',
   },
   {
     id: '03',
@@ -88,7 +88,7 @@ function SmallCard({ proj, delay }) {
         {proj.id}
       </span>
       {proj.image
-        ? <img src={proj.image} alt={proj.title} className="w-full h-40 object-cover mb-5" />
+        ? <img src={proj.image} alt={proj.title} className="w-full object-contain mb-5 bg-bg3" />
         : <Placeholder />
       }
       <div className="font-mono text-[0.58rem] tracking-[3px] uppercase text-gold mb-5">{proj.category}</div>
