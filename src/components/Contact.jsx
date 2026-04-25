@@ -16,25 +16,30 @@ export default function Contact() {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
   const handleSubmit = async e => {
-    e.preventDefault()
-    setStatus('loading')
-    try {
-      const res  = await fetch('/api/contact', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify(form),
-      })
-      const data = await res.json()
-      if (res.ok && data.ok) {
-        setStatus('success')
-        setForm({ name: '', email: '', subject: '', message: '' })
-      } else {
-        setStatus('error')
-      }
-    } catch {
+  e.preventDefault()
+  setStatus('loading')
+  try {
+    const apiUrl = import.meta.env.VITE_API_URL || ''
+    const res  = await fetch(`${apiUrl}/api/contact`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(form),
+    })
+    const data = await res.json()
+    if (res.ok && data.ok) {
+      setStatus('success')
+      setForm({ name: '', email: '', subject: '', message: '' })
+    } else {
       setStatus('error')
     }
+  } catch {
+    // Sin backend por ahora — redirigir a WhatsApp
+    const texto = `Hola Marcos, te escribo desde msgn.com.ar.%0ANombre: ${form.name}%0AEmail: ${form.email}%0A${form.subject ? `Asunto: ${form.subject}%0A` : ''}Mensaje: ${form.message}`
+    window.open(`https://wa.me/5492994567290?text=${texto}`, '_blank')
+    setStatus('idle')
+    setForm({ name: '', email: '', subject: '', message: '' })
   }
+}
 
   return (
     <section id="contacto" className="relative z-10 text-center py-[120px] px-9 md:px-[4.5rem]"
