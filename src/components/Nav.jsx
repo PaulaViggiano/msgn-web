@@ -27,14 +27,14 @@ export default function Nav() {
     <>
       <nav className={`fixed top-0 left-0 right-0 z-50 flex justify-between items-center transition-all duration-500 px-5 md:px-[4.5rem] ${
         scrolled || menuOpen
-          ? 'py-3 bg-bg/98 backdrop-blur-xl border-b border-[rgba(201,153,58,0.12)]'
-          : 'py-4 md:py-7'
+          ? 'py-2 bg-bg/98 backdrop-blur-xl border-b border-[rgba(201,153,58,0.12)]'
+          : 'py-3 md:py-6'
       }`}>
 
         {/* Logo */}
         <a href="#" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
           className="flex items-center no-underline z-10">
-          <MSGNLogo width={80} className="md:w-[100px]" />
+          <MSGNLogo width={70} className="md:w-[90px]" />
         </a>
 
         {/* Links desktop */}

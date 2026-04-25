@@ -44,7 +44,7 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center overflow-hidden px-5 md:px-[4.5rem]">
       <NetworkCanvas />
 
-      <div className="relative z-10 w-full max-w-[640px] pt-28 md:pt-24 pb-20">
+      <div className="relative z-10 w-full max-w-[640px] pt-36 md:pt-28 pb-24">
 
         {/* Eyebrow */}
         <div className="hero-anim-1 inline-flex items-center gap-2.5 mb-6 md:mb-9 font-mono text-[0.58rem] md:text-[0.62rem] tracking-[3px] uppercase text-gold">

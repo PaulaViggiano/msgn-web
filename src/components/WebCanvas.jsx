@@ -4,10 +4,10 @@ const NODES = [
   { label: 'MSGN',           cx: 0.5,  cy: 0.5,  hub: true },
   { label: 'Gobierno',       cx: 0.2,  cy: 0.15 },
   { label: 'Medios',         cx: 0.8,  cy: 0.15 },
-  { label: 'Sector Privado', cx: 0.92, cy: 0.5  },
+  { label: 'Sector Privado', cx: 0.82, cy: 0.5  },
   { label: 'Internacional',  cx: 0.75, cy: 0.85 },
   { label: 'Eventos',        cx: 0.25, cy: 0.85 },
-  { label: 'Proveedores',    cx: 0.08, cy: 0.5  },
+  { label: 'Proveedores',    cx: 0.18, cy: 0.5  },
   { label: 'Comunicación',   cx: 0.35, cy: 0.28 },
   { label: 'Marketing',      cx: 0.65, cy: 0.28 },
 ]
