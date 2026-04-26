@@ -16,7 +16,7 @@ export default function Connector() {
           </h2>
           <div className="mt-8 space-y-4">
             <p className="text-base text-cream2 leading-[1.9]">
-              <strong className="text-off-white">Marcos Galián no es solo productor de eventos.</strong> Es el punto donde convergen el gobierno, los medios, el sector privado y las instituciones de Neuquén y la Patagonia.
+              <strong className="text-off-white">Marcos Galián no es solo productor de eventos.</strong> Es el punto donde convergen el sector público, los medios, el sector privado y las instituciones de Neuquén y la Patagonia.
             </p>
             <p className="text-base text-cream2 leading-[1.9]">
               Con más de 15 años construyendo relaciones reales en la región, MSGN puede hacer que cualquier proyecto encuentre el eco que necesita: el contacto correcto, el medio adecuado, el sponsor estratégico, el aval institucional.

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 
 const NODES = [
   { label: 'MSGN',           cx: 0.5,  cy: 0.5,  hub: true },
-  { label: 'Gobierno',       cx: 0.2,  cy: 0.15 },
+  { label: 'sector público',       cx: 0.2,  cy: 0.15 },
   { label: 'Medios',         cx: 0.8,  cy: 0.15 },
   { label: 'Sector Privado', cx: 0.82, cy: 0.5  },
   { label: 'Internacional',  cx: 0.75, cy: 0.85 },
