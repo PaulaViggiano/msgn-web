@@ -24,8 +24,8 @@ const PROJECTS = [
   {
     id: '03',
     category: 'Energía · Internacional',
-    title: 'Oil & Gas · AOG Argentina',
-    desc: 'Presencia en el evento de oil & gas más importante de Argentina. Expansión de la red de vínculos hacia el ecosistema energético internacional.',
+    title: 'Oil & Gas · AOG Patagonia',
+    desc: 'Presencia en el evento de oil & gas más importante de Patagonia. Expansión de la red de vínculos hacia el ecosistema energético internacional.',
     // image: '/images/aog.jpg',
   },
 ]

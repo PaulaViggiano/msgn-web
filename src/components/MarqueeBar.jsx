@@ -1,7 +1,7 @@
 const ITEMS = [
   'Edifica Neuquén',
   'IA Week 2026',
-  'Oil & Gas · AOG Argentina',
+  'Oil & Gas · AOG Patagonia',
   '+500 proyectos',
   '+45.000 visitantes',
   'Comunicación · Marketing · Eventos',
