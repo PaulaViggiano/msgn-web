@@ -22,7 +22,7 @@ export default function Connector() {
               Con más de 15 años construyendo relaciones reales en la región, MSGN puede hacer que cualquier proyecto encuentre el eco que necesita: el contacto correcto, el medio adecuado, el sponsor estratégico, el aval institucional.
             </p>
             <p className="text-base text-cream2 leading-[1.9]">
-              Desde una exposición con 45.000 personas hasta una campaña de comunicación para una pyme local. Desde el Polo Tecnológico de Neuquén hasta <strong className="text-off-white">AOG en Australia</strong>. La escala cambia, el compromiso no.
+              Desde una exposición con 45.000 personas hasta una campaña de comunicación para una pyme local. Desde el Polo Tecnológico de Neuquén hasta <strong className="text-off-white">AOG en Argentina</strong>. La escala cambia, el compromiso no.
             </p>
           </div>
         </div>
