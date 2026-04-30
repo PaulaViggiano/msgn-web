@@ -17,7 +17,7 @@ export default function Footer() {
 
       {/* Copyright */}
       <div className="font-mono text-[0.55rem] tracking-[2px] text-brand-slate uppercase text-center">
-        © 2026 · Marcos Galián · Experiencias & Producciones · Neuquén
+        © 2026 · Marcos Galian · Experiencias & Producciones · Neuquén
       </div>
 
       {/* Links */}
