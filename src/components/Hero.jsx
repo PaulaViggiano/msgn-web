@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import NetworkCanvas from './NetworkCanvas'
 
 const PHRASES = [
-  'Conectamos sector público, medios y empresas.',
+  'Conectamos sector pyme, industrias, instituciones con medios y formatos de comunicación.',
   'Producimos eventos que dejan huella.',
   'Convertimos ideas en impacto real.',
   'Tu nexo con el ecosistema de Neuquén, Río Negro y región Vaca Muerta.',
