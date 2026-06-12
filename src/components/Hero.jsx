@@ -5,7 +5,7 @@ const PHRASES = [
   'Conectamos sector público, medios y empresas.',
   'Producimos eventos que dejan huella.',
   'Convertimos ideas en impacto real.',
-  'Tu nexo con el ecosistema de Neuquén.',
+  'Tu nexo con el ecosistema de Neuquén, Río Negro y región Vaca Muerta.',
 ]
 
 const NETWORK_NODES = ['Medios', 'Sector Privado', 'Eventos', 'Proveedores', 'Sector Público', 'Internacional']
@@ -49,7 +49,7 @@ export default function Hero() {
         {/* Eyebrow */}
         <div className="hero-anim-1 inline-flex items-center gap-2.5 mb-6 md:mb-9 font-mono text-[0.58rem] md:text-[0.62rem] tracking-[3px] uppercase text-gold">
           <span className="w-[7px] h-[7px] rounded-full bg-gold animate-pulseDot flex-shrink-0" />
-          Neuquén · Patagonia · +15 años
+          Neuquén · Patagonia · +17 años
         </div>
 
         {/* Título */}
