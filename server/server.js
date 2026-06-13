@@ -1,10 +1,11 @@
 import 'dotenv/config'
-import express    from 'express'
-import cors       from 'cors'
-import nodemailer from 'nodemailer'
+import express from 'express'
+import cors    from 'cors'
+import { Resend } from 'resend'
 
 const app  = express()
 const PORT = process.env.PORT || 3001
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 app.use(cors({  origin: [
     'http://localhost:5173',
@@ -14,18 +15,6 @@ app.use(cors({  origin: [
 app.options('*', cors())
 app.use(express.json())
 
-function createTransporter() {
-  return nodemailer.createTransport({
-    host:   process.env.SMTP_HOST || 'smtp.gmail.com',
-    port:   parseInt(process.env.SMTP_PORT || '587'),
-    secure: process.env.SMTP_SECURE === 'true',
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
-  })
-}
-
 app.post('/api/contact', async (req, res) => {
   const { name, email, subject, message } = req.body
 
@@ -34,11 +23,9 @@ app.post('/api/contact', async (req, res) => {
   }
 
   try {
-    const transporter = createTransporter()
-
     // Email que recibe Marcos
-    await transporter.sendMail({
-      from:    `"Web MSGN" <${process.env.SMTP_USER}>`,
+    await resend.emails.send({
+      from:    'Web MSGN <director@msgn.com.ar>',
       to:      'director@msgn.com.ar',
       replyTo: email,
       subject: `[MSGN] ${subject || 'Nuevo contacto desde msgn.com.ar'}`,
@@ -64,8 +51,8 @@ app.post('/api/contact', async (req, res) => {
     })
 
     // Auto-respuesta al visitante
-    await transporter.sendMail({
-      from:    `"Marcos Galián · MSGN" <${process.env.SMTP_USER}>`,
+    await resend.emails.send({
+      from:    'Marcos Galián · MSGN <director@msgn.com.ar>',
       to:      email,
       subject: `Recibimos tu mensaje — MSGN`,
       html: `
