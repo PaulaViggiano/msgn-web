@@ -19,7 +19,6 @@ export default function Contact() {
   e.preventDefault()
   setStatus('loading')
   try {
-    const apiUrl = import.meta.env.VITE_API_URL || ''
     const res = await fetch('/api/contact', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
