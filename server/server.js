@@ -11,9 +11,9 @@ app.use(express.json())
 
 function createTransporter() {
   return nodemailer.createTransport({
-    host:   'smtp.gmail.com',
-    port:   587,
-    secure: false,
+    host:   process.env.SMTP_HOST || 'smtp.gmail.com',
+    port:   parseInt(process.env.SMTP_PORT || '587'),
+    secure: process.env.SMTP_SECURE === 'true',
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
@@ -34,7 +34,7 @@ app.post('/api/contact', async (req, res) => {
     // Email que recibe Marcos
     await transporter.sendMail({
       from:    `"Web MSGN" <${process.env.SMTP_USER}>`,
-      to:      'galianmarcos@gmail.com',
+      to:      'director@msgn.com.ar',
       replyTo: email,
       subject: `[MSGN] ${subject || 'Nuevo contacto desde msgn.com.ar'}`,
       html: `
