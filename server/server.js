@@ -11,6 +11,7 @@ app.use(cors({  origin: [
     'https://msgn.com.ar',
     'https://www.msgn.com.ar',
   ] }))
+app.options('*', cors())
 app.use(express.json())
 
 function createTransporter() {
