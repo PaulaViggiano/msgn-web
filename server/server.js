@@ -6,7 +6,11 @@ import nodemailer from 'nodemailer'
 const app  = express()
 const PORT = process.env.PORT || 3001
 
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173' }))
+app.use(cors({  origin: [
+    'http://localhost:5173',
+    'https://msgn.com.ar',
+    'https://www.msgn.com.ar',
+  ] }))
 app.use(express.json())
 
 function createTransporter() {
