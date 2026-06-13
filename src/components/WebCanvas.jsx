@@ -22,12 +22,14 @@ export default function WebCanvas() {
     let rafId, t = 0, started = false
 
     function resize() {
-      canvas.width  = canvas.offsetWidth
-      canvas.height = canvas.offsetHeight
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      canvas.width  = canvas.offsetWidth  * dpr
+      canvas.height = canvas.offsetHeight * dpr
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
 
     function draw() {
-      const W = canvas.width, H = canvas.height
+      const W = canvas.offsetWidth, H = canvas.offsetHeight
       ctx.clearRect(0, 0, W, H)
       t += 0.008
 

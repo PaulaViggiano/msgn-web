@@ -14,13 +14,15 @@ export default function NetworkCanvas() {
     const mouse = { x: -999, y: -999 }
 
     function resize() {
-      canvas.width  = canvas.offsetWidth
-      canvas.height = canvas.offsetHeight
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      canvas.width  = canvas.offsetWidth  * dpr
+      canvas.height = canvas.offsetHeight * dpr
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       initNodes()
     }
 
     function initNodes() {
-      const { width: W, height: H } = canvas
+      const W = canvas.offsetWidth, H = canvas.offsetHeight
       nodes = Array.from({ length: 28 }, (_, i) => ({
         x:     Math.random() * W,
         y:     Math.random() * H,
@@ -32,7 +34,7 @@ export default function NetworkCanvas() {
     }
 
     function draw() {
-      const { width: W, height: H } = canvas
+      const W = canvas.offsetWidth, H = canvas.offsetHeight
       ctx.clearRect(0, 0, W, H)
 
       nodes.forEach(n => {
@@ -79,14 +81,20 @@ export default function NetworkCanvas() {
       mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top
     }
 
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { resize(); draw() }
+      else cancelAnimationFrame(rafId)
+    }, { threshold: 0 })
+    io.observe(canvas)
+
     window.addEventListener('resize', resize)
     canvas.addEventListener('mousemove', onMouseMove)
-    resize(); draw()
 
     return () => {
       cancelAnimationFrame(rafId)
       window.removeEventListener('resize', resize)
       canvas.removeEventListener('mousemove', onMouseMove)
+      io.disconnect()
     }
   }, [])
 

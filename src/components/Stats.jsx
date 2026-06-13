@@ -61,7 +61,7 @@ export default function Stats() {
     <div className="relative z-10 border-t border-b border-[rgba(201,153,58,0.12)] py-20 px-9 md:px-[4.5rem]">
       <div className="grid grid-cols-2 md:grid-cols-4">
         {STATS.map((stat, i) => (
-          <CounterItem key={i} stat={stat} delay={i} />
+          <CounterItem key={i} stat={stat} delay={i + 1} />
         ))}
       </div>
     </div>

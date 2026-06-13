@@ -12,7 +12,7 @@ export default {
         gold:    '#C9993A',
         gold2:   '#E8B84B',
         teal:    '#4A9B8E',
-        'brand-slate': '#6B7A99',
+        'brand-slate': '#7D8BA8',
         'off-white':   '#F5F2EC',
       },
       fontFamily: {

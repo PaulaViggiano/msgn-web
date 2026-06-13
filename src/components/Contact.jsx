@@ -9,7 +9,7 @@ const SOCIAL_LINKS = [
 ]
 
 export default function Contact() {
-  const [form, setForm]     = useState({ name: '', email: '', subject: '', message: '' })
+  const [form, setForm]     = useState({ name: '', email: '', subject: '', message: '', website: '' })
   const [status, setStatus] = useState('idle') // idle | loading | success | error
 
   const handleChange = e =>
@@ -27,16 +27,23 @@ export default function Contact() {
     const data = await res.json()
     if (res.ok && data.ok) {
       setStatus('success')
-      setForm({ name: '', email: '', subject: '', message: '' })
+      setForm({ name: '', email: '', subject: '', message: '', website: '' })
     } else {
       setStatus('error')
     }
   } catch {
-    // Sin backend por ahora — redirigir a WhatsApp
-    const texto = `Hola Marcos, te escribo desde msgn.com.ar.%0ANombre: ${form.name}%0AEmail: ${form.email}%0A${form.subject ? `Asunto: ${form.subject}%0A` : ''}Mensaje: ${form.message}`
-    window.open(`https://wa.me/5492994567290?text=${texto}`, '_blank')
+    // redirigir a WhatsApp como fallback
+    const lineas = [
+      'Hola Marcos, te escribo desde msgn.com.ar.',
+      `Nombre: ${form.name}`,
+      `Email: ${form.email}`,
+      form.subject ? `Asunto: ${form.subject}` : null,
+      `Mensaje: ${form.message}`,
+    ].filter(Boolean).join('\n')
+    window.open(`https://wa.me/5492994567290?text=${encodeURIComponent(lineas)}`, '_blank')
     setStatus('idle')
-    setForm({ name: '', email: '', subject: '', message: '' })
+    setForm({ name: '', email: '', subject: '', message: '', website: '' })
+
   }
 }
 
@@ -104,22 +111,26 @@ export default function Contact() {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-5">
+              <input type="text" name="website" tabIndex={-1} autoComplete="off"
+                aria-hidden="true" value={form.website} onChange={handleChange}
+                style={{ position: 'absolute', left: '-9999px', opacity: 0 }} 
+              />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
-                  <label className="font-mono text-[0.6rem] tracking-[2px] uppercase text-brand-slate block mb-2">
+                  <label htmlFor="c-name" className="font-mono text-[0.6rem] tracking-[2px] uppercase text-brand-slate block mb-2">
                     Nombre *
                   </label>
-                  <input type="text" name="name" required
+                  <input type="text" id="c-name" name="name" required autoComplete="name"
                     value={form.name} onChange={handleChange}
                     placeholder="Tu nombre"
                     className="w-full bg-bg3 border border-[rgba(201,153,58,0.15)] text-cream px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors duration-200 placeholder:text-brand-slate/40"
                   />
                 </div>
                 <div>
-                  <label className="font-mono text-[0.6rem] tracking-[2px] uppercase text-brand-slate block mb-2">
+                  <label htmlFor="c-email" className="font-mono text-[0.6rem] tracking-[2px] uppercase text-brand-slate block mb-2">
                     Email *
                   </label>
-                  <input type="email" name="email" required
+                  <input type="email" id="c-email" name="email" required autoComplete="email"
                     value={form.email} onChange={handleChange}
                     placeholder="tu@email.com"
                     className="w-full bg-bg3 border border-[rgba(201,153,58,0.15)] text-cream px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors duration-200 placeholder:text-brand-slate/40"
@@ -128,10 +139,10 @@ export default function Contact() {
               </div>
 
               <div>
-                <label className="font-mono text-[0.6rem] tracking-[2px] uppercase text-brand-slate block mb-2">
+                <label htmlFor="c-subject" className="font-mono text-[0.6rem] tracking-[2px] uppercase text-brand-slate block mb-2">
                   Asunto
                 </label>
-                <input type="text" name="subject"
+                <input type="text" id="c-subject" name="subject"
                   value={form.subject} onChange={handleChange}
                   placeholder="¿De qué se trata tu proyecto?"
                   className="w-full bg-bg3 border border-[rgba(201,153,58,0.15)] text-cream px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors duration-200 placeholder:text-brand-slate/40"
@@ -139,10 +150,10 @@ export default function Contact() {
               </div>
 
               <div>
-                <label className="font-mono text-[0.6rem] tracking-[2px] uppercase text-brand-slate block mb-2">
+                <label htmlFor="c-message" className="font-mono text-[0.6rem] tracking-[2px] uppercase text-brand-slate block mb-2">
                   Mensaje *
                 </label>
-                <textarea name="message" required rows={5}
+                <textarea id="c-message" name="message" required rows={5}
                   value={form.message} onChange={handleChange}
                   placeholder="Contanos tu idea, proyecto o consulta..."
                   className="w-full bg-bg3 border border-[rgba(201,153,58,0.15)] text-cream px-4 py-3 text-sm focus:outline-none focus:border-gold transition-colors duration-200 placeholder:text-brand-slate/40 resize-none"

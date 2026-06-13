@@ -2,15 +2,32 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+// Escapa caracteres HTML para evitar inyección en el cuerpo del mail
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c =>
+  ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ ok: false, error: 'Method not allowed' })
   }
 
-  const { name, email, subject, message } = req.body || {}
+  const { name, email, subject, message, website } = req.body || {}
+
+  // Honeypot: un bot completa este campo oculto; un humano no
+  if (website) return res.status(200).json({ ok: true })
 
   if (!name?.trim() || !email?.trim() || !message?.trim()) {
     return res.status(400).json({ ok: false, error: 'Campos requeridos faltantes.' })
+  }
+
+  if (!EMAIL_RE.test(email.trim())) {
+    return res.status(400).json({ ok: false, error: 'Email inválido.' })
+  }
+
+  if (name.length > 100 || (subject?.length || 0) > 150 || message.length > 3000) {
+    return res.status(400).json({ ok: false, error: 'Contenido demasiado largo.' })
   }
 
   // Email a Marcos
@@ -18,20 +35,20 @@ export default async function handler(req, res) {
     from:    'Web MSGN <director@msgn.com.ar>',
     to:      'director@msgn.com.ar',
     replyTo: email,
-    subject: `[MSGN] ${subject || 'Nuevo contacto desde msgn.com.ar'}`,
+    subject: `[MSGN] ${esc(subject) || 'Nuevo contacto desde msgn.com.ar'}`,
     html: `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0D1117;color:#EDE8DF;padding:40px;border:1px solid rgba(201,153,58,0.2);">
         <h2 style="color:#C9993A;border-bottom:2px solid #C9993A;padding-bottom:12px;margin-bottom:24px;">
           MSGN · Nuevo mensaje desde msgn.com.ar
         </h2>
-        <p style="margin-bottom:8px;"><strong style="color:#6B7A99;">Nombre:</strong> ${name}</p>
+        <p style="margin-bottom:8px;"><strong style="color:#6B7A99;">Nombre:</strong> ${esc(name)}</p>
         <p style="margin-bottom:8px;"><strong style="color:#6B7A99;">Email:</strong>
-          <a href="mailto:${email}" style="color:#C9993A;">${email}</a>
+          <a href="mailto:${esc(email)}" style="color:#C9993A;">${esc(email)}</a>
         </p>
-        ${subject ? `<p style="margin-bottom:8px;"><strong style="color:#6B7A99;">Asunto:</strong> ${subject}</p>` : ''}
+        ${subject ? `<p style="margin-bottom:8px;"><strong style="color:#6B7A99;">Asunto:</strong> ${esc(subject)}</p>` : ''}
         <div style="margin-top:24px;padding:20px;background:#161B27;border-left:3px solid #C9993A;">
           <p style="color:#6B7A99;font-size:0.75rem;margin:0 0 10px;text-transform:uppercase;letter-spacing:1px;">Mensaje</p>
-          <p style="margin:0;line-height:1.7;white-space:pre-wrap;">${message}</p>
+          <p style="margin:0;line-height:1.7;white-space:pre-wrap;">${esc(message)}</p>
         </div>
         <p style="margin-top:28px;color:#6B7A99;font-size:0.75rem;">
           Enviado desde msgn.com.ar · ${new Date().toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' })}
@@ -53,7 +70,7 @@ export default async function handler(req, res) {
     html: `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0D1117;color:#EDE8DF;padding:40px;border:1px solid rgba(201,153,58,0.2);">
         <h2 style="color:#C9993A;border-bottom:2px solid #C9993A;padding-bottom:12px;margin-bottom:24px;">MSGN</h2>
-        <p>Hola <strong>${name.split(' ')[0]}</strong>,</p>
+        <p>Hola <strong>${esc(name.split(' ')[0])}</strong>,</p>
         <p style="color:#C8C0B0;line-height:1.7;margin-top:12px;">
           Gracias por escribirnos. Recibimos tu mensaje y nos ponemos en contacto a la brevedad.
         </p>
@@ -76,7 +93,6 @@ export default async function handler(req, res) {
 
   if (err2) {
     console.error('[MSGN] Error auto-respuesta:', err2.message)
-    // No fallamos por esto — el mail principal ya se envió
   }
 
   return res.status(200).json({ ok: true })

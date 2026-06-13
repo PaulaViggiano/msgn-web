@@ -25,6 +25,6 @@ dist-ssr
 
 # MSGN
 client/node_modules/
-server/node_modules/
 client/dist/
 .env
+readmeCompleto.md
